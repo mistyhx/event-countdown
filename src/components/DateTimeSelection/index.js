@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 const DateTimeSelection = ({ datetime, onChange, onSubmit }) => {
   return (
@@ -9,7 +10,13 @@ const DateTimeSelection = ({ datetime, onChange, onSubmit }) => {
           onSubmit();
         }}
       >
-        <input type="datetime-local" name="datetime-local" value={datetime} onChange={e => onChange(e.target.value)} />
+        <input
+          type="datetime-local"
+          name="datetime-local"
+          value={datetime}
+          onChange={e => onChange(e.target.value)}
+          min={moment().format("YYYY-MM-DDThh:mm")}
+        />
         <input type="submit" />
       </form>
     </div>
