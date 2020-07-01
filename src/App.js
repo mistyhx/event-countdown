@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./App.css";
 import DateTimeSelection from "./components/DateTimeSelection";
+import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
   const [datetime, setDateTime] = useState("");
@@ -39,14 +40,12 @@ function App() {
 
   return (
     <div className="App">
-      <button>Change Event</button>
-      <DateTimeSelection datetime={datetime} onChange={value => setDateTime(value)} onSubmit={() => handleSubmit()} />
-      <div className="count-down">
-        <div className="day">{day}</div>
-        <div className="hours">{hour}</div>
-        <div className="minutes">{minute}</div>
-        <div className="seconds">{second}</div>
+      <button className="start-button">START</button>
+      <div className="datetime-selector">
+        <DateTimeSelection datetime={datetime} onChange={value => setDateTime(value)} onSubmit={() => handleSubmit()} />
       </div>
+      <div className="event-title">新年倒计时</div>
+      <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
     </div>
   );
 }
