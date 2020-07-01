@@ -11,10 +11,9 @@ function App() {
   const [second, setSecond] = useState(0);
 
   const updateCountDown = () => {
-    const then = moment(datetime, "YYYY-MM-DDThh:mm:ss");
+    const then = moment(datetime);
     const now = moment();
     const countdown = moment(then - now);
-    //this calculation result is problematic;
     const days = countdown.format("D");
     const hours = countdown.format("HH");
     const minutes = countdown.format("mm");
@@ -41,11 +40,7 @@ function App() {
   return (
     <div className="App">
       <button>Change Event</button>
-      <DateTimeSelection
-        datetime={datetime}
-        onChange={datetime => setDateTime(datetime)}
-        onSubmit={() => handleSubmit()}
-      />
+      <DateTimeSelection datetime={datetime} onChange={value => setDateTime(value)} onSubmit={() => handleSubmit()} />
       <div className="count-down">
         <div className="day">{day}</div>
         <div className="hours">{hour}</div>
