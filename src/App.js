@@ -40,7 +40,7 @@ function App() {
 
   return (
     <div className="App">
-      <button className="start-button">START</button>
+      <button className="start-button">CREATE EVENT</button>
       <div className="datetime-selector">
         <DateTimeSelection datetime={datetime} onChange={value => setDateTime(value)} onSubmit={() => handleSubmit()} />
       </div>
