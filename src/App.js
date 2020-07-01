@@ -5,26 +5,38 @@ import DateTimeSelection from "./components/DateTimeSelection";
 
 function App() {
   const [datetime, setDateTime] = useState("");
-  const [day, setDay] = useState("");
-  const [hour, setHour] = useState("");
-  const [minute, setMinute] = useState("");
+  const [day, setDay] = useState(0);
+  const [hour, setHour] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [second, setSecond] = useState(0);
 
-  const handleSubmit = () => {
+  const updateCountDown = () => {
     const then = moment(datetime);
     const now = moment();
     const countdown = moment(then - now);
+    //this calculation result is problematic;
     const days = countdown.format("D");
     const hours = countdown.format("HH");
     const minutes = countdown.format("mm");
+    const seconds = countdown.format("ss");
     setDay(days);
     setHour(hours);
     setMinute(minutes);
+    setSecond(seconds);
   };
+
+  const handleSubmit = () => {
+    updateCountDown();
+  };
+
+  useEffect(() => {
+    setInterval(() => {}, 1000);
+    // return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="App">
       <button>Change Event</button>
-      {/*calculate the difference on submit */}
       <DateTimeSelection
         datetime={datetime}
         onChange={datetime => setDateTime(datetime)}
@@ -34,6 +46,7 @@ function App() {
         <div className="day">{day}</div>
         <div className="hours">{hour}</div>
         <div className="minutes">{minute}</div>
+        <div className="seconds">{second}</div>
       </div>
     </div>
   );
