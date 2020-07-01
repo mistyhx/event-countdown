@@ -11,7 +11,7 @@ function App() {
   const [second, setSecond] = useState(0);
 
   const updateCountDown = () => {
-    const then = moment(datetime);
+    const then = moment(datetime, "YYYY-MM-DDThh:mm:ss");
     const now = moment();
     const countdown = moment(then - now);
     //this calculation result is problematic;
@@ -30,9 +30,13 @@ function App() {
   };
 
   useEffect(() => {
-    setInterval(() => {}, 1000);
+    setInterval(() => {
+      if (datetime) {
+        updateCountDown();
+      }
+    }, 1000);
     // return () => clearInterval(interval);
-  }, []);
+  }, [datetime]);
 
   return (
     <div className="App">
