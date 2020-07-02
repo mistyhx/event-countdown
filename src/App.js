@@ -8,8 +8,11 @@ function App() {
   const initialTitle = window.localStorage.getItem("eventTitle") || "";
   const initialDate = window.localStorage.getItem("targetDate") || "";
 
-  const [title, setTitle] = useState(initialTitle);
-  const [datetime, setDateTime] = useState(initialDate);
+  const [title, setTitle] = useState("");
+  const [datetime, setDateTime] = useState("");
+
+  const [displayingTitle, setDisplayingTitle] = useState(initialTitle);
+  const [targetdate, setTargetDate] = useState(initialDate);
 
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
@@ -17,8 +20,8 @@ function App() {
   const [second, setSecond] = useState(0);
 
   const updateCountDown = () => {
-    if (datetime) {
-      const then = moment(datetime, "YYYY-MM-DDThh:mm");
+    if (targetdate) {
+      const then = moment(targetdate, "YYYY-MM-DDThh:mm");
       const now = moment();
       const duration = moment.duration(then.diff(now));
       if (duration >= 0) {
@@ -42,14 +45,15 @@ function App() {
   const handleSubmit = () => {
     window.localStorage.setItem("targetDate", datetime);
     window.localStorage.setItem("eventTitle", title);
-    // updateCountDown();
+    setDisplayingTitle(title);
+    setTargetDate(datetime);
   };
 
   useEffect(() => {
     const interval = setInterval(() => updateCountDown(), 1000);
     //clear interval on unmount
     return () => clearInterval(interval);
-  }, []);
+  }, [targetdate]);
 
   return (
     <div className="App">
@@ -72,7 +76,7 @@ function App() {
           />
         </div>
 
-        <div className="event-title">NEW YEAR</div>
+        <div className="event-title">{displayingTitle}</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
     </div>
