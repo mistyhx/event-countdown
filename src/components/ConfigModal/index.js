@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import "./index.css";
 
-const DateTimeSelection = ({ datetime, onChange, onSubmit, title, onChangeTitle }) => {
+const ConfigModal = ({ datetime, onChange, onSubmit, title, onChangeTitle }) => {
   return (
     <div className="container">
       <form
@@ -31,4 +31,4 @@ const DateTimeSelection = ({ datetime, onChange, onSubmit, title, onChangeTitle 
   );
 };
 
-export default DateTimeSelection;
+export default ConfigModal;

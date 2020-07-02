@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./App.css";
-import DateTimeSelection from "./components/DateTimeSelection";
+import ConfigModal from "./components/ConfigModal";
 import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
@@ -71,7 +71,7 @@ function App() {
           {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
         {modal ? (
-          <DateTimeSelection
+          <ConfigModal
             datetime={datetime}
             title={title}
             onChange={value => setDateTime(value)}
