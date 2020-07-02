@@ -12,13 +12,13 @@ function App() {
   const [second, setSecond] = useState(0);
 
   const updateCountDown = () => {
-    const then = moment(datetime);
+    const then = moment(datetime, "YYYY-MM-DDThh:mm");
     const now = moment();
-    const countdown = moment(then - now);
-    const days = countdown.format("D");
-    const hours = countdown.format("HH");
-    const minutes = countdown.format("mm");
-    const seconds = countdown.format("ss");
+    const duration = moment.duration(then.diff(now));
+    const days = duration.get("days");
+    const hours = duration.get("hours");
+    const minutes = duration.get("minutes");
+    const seconds = duration.get("seconds");
     setDay(days);
     setHour(hours);
     setMinute(minutes);
@@ -36,7 +36,7 @@ function App() {
       }
     }, 1000);
     // return () => clearInterval(interval);
-  }, [datetime]);
+  }, []);
 
   return (
     <div className="App">
