@@ -15,14 +15,21 @@ function App() {
     const then = moment(datetime, "YYYY-MM-DDThh:mm");
     const now = moment();
     const duration = moment.duration(then.diff(now));
-    const days = duration.get("days");
-    const hours = duration.get("hours");
-    const minutes = duration.get("minutes");
-    const seconds = duration.get("seconds");
-    setDay(days);
-    setHour(hours);
-    setMinute(minutes);
-    setSecond(seconds);
+    if (duration >= 0) {
+      const days = duration.get("days");
+      const hours = duration.get("hours");
+      const minutes = duration.get("minutes");
+      const seconds = duration.get("seconds");
+      setDay(days);
+      setHour(hours);
+      setMinute(minutes);
+      setSecond(seconds);
+    } else {
+      setDay(0);
+      setHour(0);
+      setMinute(0);
+      setSecond(0);
+    }
   };
 
   const handleSubmit = () => {
@@ -36,7 +43,7 @@ function App() {
       }
     }, 1000);
     // return () => clearInterval(interval);
-  }, []);
+  }, [datetime]);
 
   return (
     <div className="App">
