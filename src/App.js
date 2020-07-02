@@ -47,12 +47,27 @@ function App() {
 
   return (
     <div className="App">
-      <button className="start-button">CREATE EVENT</button>
-      <div className="datetime-selector">
-        <DateTimeSelection datetime={datetime} onChange={value => setDateTime(value)} onSubmit={() => handleSubmit()} />
+      <svg className="top" height="200" width="100%">
+        <ellipse cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
+      </svg>
+
+      <svg className="bottom" height="300" width="100%">
+        <ellipse cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
+      </svg>
+      <div className="main">
+        <button className="start-button">CREATE EVENT</button>
+
+        <div className="datetime-selector">
+          <DateTimeSelection
+            datetime={datetime}
+            onChange={value => setDateTime(value)}
+            onSubmit={() => handleSubmit()}
+          />
+        </div>
+
+        <div className="event-title">新年倒计时</div>
+        <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
-      <div className="event-title">新年倒计时</div>
-      <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
     </div>
   );
 }
