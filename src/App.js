@@ -65,7 +65,7 @@ function App() {
           />
         </div>
 
-        <div className="event-title">新年倒计时</div>
+        <div className="event-title">NEW YEAR</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
     </div>

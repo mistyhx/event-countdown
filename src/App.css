@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Notable");
+
 .App {
   text-align: center;
   background-color: #f0f0ee;
   height: 100vh;
-  font-family: Roboto;
+  font-family: Lato;
   position: relative;
 }
 
@@ -25,9 +27,10 @@
 }
 
 .event-title {
-  margin-top: 4rem;
+  font-family: Notable;
+  margin-top: 5rem;
   margin-bottom: 4rem;
-  font-size: 4rem;
+  font-size: 7rem;
 }
 
 .datetime-selector {
@@ -41,4 +44,5 @@
   position: absolute;
   right: 2rem;
   top: 2rem;
+  cursor: pointer;
 }
