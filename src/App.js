@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./App.css";
 import DateTimeSelection from "./components/DateTimeSelection";
+import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
   const [datetime, setDateTime] = useState("");
@@ -11,17 +12,24 @@ function App() {
   const [second, setSecond] = useState(0);
 
   const updateCountDown = () => {
-    const then = moment(datetime);
+    const then = moment(datetime, "YYYY-MM-DDThh:mm");
     const now = moment();
-    const countdown = moment(then - now);
-    const days = countdown.format("D");
-    const hours = countdown.format("HH");
-    const minutes = countdown.format("mm");
-    const seconds = countdown.format("ss");
-    setDay(days);
-    setHour(hours);
-    setMinute(minutes);
-    setSecond(seconds);
+    const duration = moment.duration(then.diff(now));
+    if (duration >= 0) {
+      const days = duration.get("days");
+      const hours = duration.get("hours");
+      const minutes = duration.get("minutes");
+      const seconds = duration.get("seconds");
+      setDay(days);
+      setHour(hours);
+      setMinute(minutes);
+      setSecond(seconds);
+    } else {
+      setDay(0);
+      setHour(0);
+      setMinute(0);
+      setSecond(0);
+    }
   };
 
   const handleSubmit = () => {
@@ -39,13 +47,26 @@ function App() {
 
   return (
     <div className="App">
-      <button>Change Event</button>
-      <DateTimeSelection datetime={datetime} onChange={value => setDateTime(value)} onSubmit={() => handleSubmit()} />
-      <div className="count-down">
-        <div className="day">{day}</div>
-        <div className="hours">{hour}</div>
-        <div className="minutes">{minute}</div>
-        <div className="seconds">{second}</div>
+      <svg className="top" height="200" width="100%">
+        <ellipse cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
+      </svg>
+
+      <svg className="bottom" height="300" width="100%">
+        <ellipse cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
+      </svg>
+      <div className="main">
+        <button className="start-button">CREATE EVENT</button>
+
+        <div className="datetime-selector">
+          <DateTimeSelection
+            datetime={datetime}
+            onChange={value => setDateTime(value)}
+            onSubmit={() => handleSubmit()}
+          />
+        </div>
+
+        <div className="event-title">NEW YEAR</div>
+        <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
     </div>
   );
