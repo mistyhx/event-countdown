@@ -5,7 +5,12 @@ import DateTimeSelection from "./components/DateTimeSelection";
 import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
-  const [datetime, setDateTime] = useState("");
+  const initialTitle = window.localStorage.getItem("eventTitle") || "";
+  const initialDate = window.localStorage.getItem("targetDate") || "";
+
+  const [title, setTitle] = useState(initialTitle);
+  const [datetime, setDateTime] = useState(initialDate);
+
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -35,14 +40,16 @@ function App() {
   };
 
   const handleSubmit = () => {
-    updateCountDown();
+    window.localStorage.setItem("targetDate", datetime);
+    window.localStorage.setItem("eventTitle", title);
+    // updateCountDown();
   };
 
   useEffect(() => {
-    const interval = setInterval(updateCountDown, 1000);
+    const interval = setInterval(() => updateCountDown(), 1000);
     //clear interval on unmount
     return () => clearInterval(interval);
-  }, [datetime]);
+  }, []);
 
   return (
     <div className="App">
@@ -58,7 +65,9 @@ function App() {
         <div className="datetime-selector">
           <DateTimeSelection
             datetime={datetime}
+            title={title}
             onChange={value => setDateTime(value)}
+            onChangeTitle={value => setTitle(value)}
             onSubmit={() => handleSubmit()}
           />
         </div>

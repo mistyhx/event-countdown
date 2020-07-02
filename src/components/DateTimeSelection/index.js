@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const DateTimeSelection = ({ datetime, onChange, onSubmit }) => {
+const DateTimeSelection = ({ datetime, onChange, onSubmit,title,onChangeTitle }) => {
   return (
     <div className="container">
       <form
@@ -10,6 +10,10 @@ const DateTimeSelection = ({ datetime, onChange, onSubmit }) => {
           onSubmit();
         }}
       >
+
+          <div className="event">
+              <input type="text" value={title} onChange={e => onChangeTitle(e.target.value)} />
+          </div>
         <input
           type="datetime-local"
           name="datetime-local"
