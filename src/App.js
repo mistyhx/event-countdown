@@ -68,7 +68,7 @@ function App() {
       </svg>
       <div className="main">
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
-          CREATE EVENT
+          {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
         {modal ? (
           <DateTimeSelection
