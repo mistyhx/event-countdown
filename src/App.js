@@ -19,6 +19,8 @@ function App() {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
 
+  const [modal, setModal] = useState(false);
+
   const updateCountDown = () => {
     if (targetdate) {
       const then = moment(targetdate, "YYYY-MM-DDThh:mm");
@@ -47,6 +49,7 @@ function App() {
     window.localStorage.setItem("eventTitle", title);
     setDisplayingTitle(title);
     setTargetDate(datetime);
+    setModal(false);
   };
 
   useEffect(() => {
@@ -64,9 +67,10 @@ function App() {
         <ellipse cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
       </svg>
       <div className="main">
-        <button className="start-button">CREATE EVENT</button>
-
-        <div className="datetime-selector">
+        <button className="start-button" onClick={() => setModal(modal => !modal)}>
+          CREATE EVENT
+        </button>
+        {modal ? (
           <DateTimeSelection
             datetime={datetime}
             title={title}
@@ -74,7 +78,7 @@ function App() {
             onChangeTitle={value => setTitle(value)}
             onSubmit={() => handleSubmit()}
           />
-        </div>
+        ) : null}
 
         <div className="event-title">{displayingTitle}</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />

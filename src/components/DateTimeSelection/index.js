@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import "./index.css";
 
 const DateTimeSelection = ({ datetime, onChange, onSubmit, title, onChangeTitle }) => {
   return (
@@ -11,16 +12,20 @@ const DateTimeSelection = ({ datetime, onChange, onSubmit, title, onChangeTitle 
         }}
       >
         <div className="event">
-          <input type="text" value={title} onChange={e => onChangeTitle(e.target.value)} />
+          <input type="text" value={title} onChange={e => onChangeTitle(e.target.value)} placeholder="Event Name" />
         </div>
-        <input
-          type="datetime-local"
-          name="datetime-local"
-          value={datetime}
-          onChange={e => onChange(e.target.value)}
-          min={moment().format("YYYY-MM-DDThh:mm")}
-        />
-        <input type="submit" />
+        <div>
+          <input
+            type="datetime-local"
+            name="datetime-local"
+            value={datetime}
+            onChange={e => onChange(e.target.value)}
+            min={moment().format("YYYY-MM-DDThh:mm")}
+          />
+        </div>
+        <div>
+          <input id="submit" type="submit" />
+        </div>
       </form>
     </div>
   );

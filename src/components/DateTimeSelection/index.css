@@ -1,0 +1,29 @@
+.container {
+  background: #fff;
+  border: 1px solid #666666;
+  padding: 2rem;
+  position: absolute;
+  top: 6rem;
+  right: 2rem;
+}
+
+.container div {
+  padding: 0.5rem 0;
+}
+
+.container input {
+  height: 2rem;
+  width: 300px;
+}
+
+.container form {
+  text-align: left;
+}
+
+#submit {
+  color: #fff;
+  background-color: #000;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
