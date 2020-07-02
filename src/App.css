@@ -9,8 +9,12 @@
 }
 
 .main {
-  /*index is only effective if position is determined. */
-  position: relative;
+  /* z index is only effective if position is determined. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 99;
 }
 
@@ -31,10 +35,6 @@
   margin-top: 5rem;
   margin-bottom: 4rem;
   font-size: 7rem;
-}
-
-.datetime-selector {
-  /*visibility: hidden;*/
 }
 
 .start-button {
