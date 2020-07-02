@@ -12,23 +12,25 @@ function App() {
   const [second, setSecond] = useState(0);
 
   const updateCountDown = () => {
-    const then = moment(datetime, "YYYY-MM-DDThh:mm");
-    const now = moment();
-    const duration = moment.duration(then.diff(now));
-    if (duration >= 0) {
-      const days = duration.get("days");
-      const hours = duration.get("hours");
-      const minutes = duration.get("minutes");
-      const seconds = duration.get("seconds");
-      setDay(days);
-      setHour(hours);
-      setMinute(minutes);
-      setSecond(seconds);
-    } else {
-      setDay(0);
-      setHour(0);
-      setMinute(0);
-      setSecond(0);
+    if (datetime) {
+      const then = moment(datetime, "YYYY-MM-DDThh:mm");
+      const now = moment();
+      const duration = moment.duration(then.diff(now));
+      if (duration >= 0) {
+        const days = duration.get("days");
+        const hours = duration.get("hours");
+        const minutes = duration.get("minutes");
+        const seconds = duration.get("seconds");
+        setDay(days);
+        setHour(hours);
+        setMinute(minutes);
+        setSecond(seconds);
+      } else {
+        setDay(0);
+        setHour(0);
+        setMinute(0);
+        setSecond(0);
+      }
     }
   };
 
@@ -37,12 +39,9 @@ function App() {
   };
 
   useEffect(() => {
-    setInterval(() => {
-      if (datetime) {
-        updateCountDown();
-      }
-    }, 1000);
-    // return () => clearInterval(interval);
+    const interval = setInterval(updateCountDown, 1000);
+    //clear interval on unmount
+    return () => clearInterval(interval);
   }, [datetime]);
 
   return (
@@ -50,7 +49,6 @@ function App() {
       <svg className="top" height="200" width="100%">
         <ellipse cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
       </svg>
-
       <svg className="bottom" height="300" width="100%">
         <ellipse cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
       </svg>
