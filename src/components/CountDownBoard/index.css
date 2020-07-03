@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
 }
 
 .countdown-board > div:first-child {
@@ -10,8 +11,9 @@
 }
 
 .block {
-  margin: 0 2rem;
-  padding: 1.5rem 3rem;
+  width: 200px;
+  margin: 0 2.5rem;
+  padding: 2.5rem 1rem;
 }
 .number {
   font-size: 8em;

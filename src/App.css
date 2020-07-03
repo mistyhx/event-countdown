@@ -16,16 +16,6 @@
   right: 0;
   bottom: 0;
   z-index: 99;
-  animation: fadeIn 2s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .top {
@@ -60,10 +50,17 @@
 }
 
 .event-title {
+  position: absolute;
   font-family: Notable;
-  margin-top: 5rem;
-  margin-bottom: 4rem;
+  top: 15%;
+  width: 100%;
   font-size: 7rem;
+}
+
+.countdown-container {
+  position: absolute;
+  top: 40%;
+  width: 100%;
 }
 
 .start-button {

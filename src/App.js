@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { animated, useTransition } from "react-spring";
+import { animated, useTransition, useSpring } from "react-spring";
 import moment from "moment";
 import "./App.css";
 import ConfigModal from "./components/ConfigModal";
 import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
-  //state
+  //DATA STATES
   const initialTitle = window.localStorage.getItem("eventTitle") || "MY EVENT";
   const initialDate = window.localStorage.getItem("targetDate") || "";
   const [title, setTitle] = useState(initialTitle);
@@ -15,15 +15,25 @@ function App() {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
+
+  //TOGGLE STATES
   const [modal, setModal] = useState(false);
 
-  //spring animations
+  //SPRING ANIMATIONS
+
   const modalTransitions = useTransition(modal, null, {
     from: { transform: "rotateZ(90deg)", transformOrigin: "top right" },
     enter: { transform: "rotateZ(0deg)" },
     leave: { transform: "rotateZ(90deg)" },
   });
 
+  const numberTransitions = useTransition(time, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
+
+  //UTIL FUNCTIONS
   const updateCountDown = () => {
     if (time) {
       const then = moment(time, "YYYY-MM-DDThh:mm");
@@ -60,6 +70,7 @@ function App() {
     return () => clearInterval(interval);
   }, [time]);
 
+  //RENDERING
   return (
     <div className="App">
       <svg className="top" height="200" width="100%">
@@ -81,7 +92,14 @@ function App() {
             )
         )}
         <div className="event-title">{title}</div>
-        <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
+        {numberTransitions.map(
+          ({ item, key, props }) =>
+            item && (
+              <animated.div className="countdown-container" key={key} style={props}>
+                <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
+              </animated.div>
+            )
+        )}
       </div>
     </div>
   );
