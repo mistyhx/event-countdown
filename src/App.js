@@ -7,12 +7,8 @@ import CountDownBoard from "./components/CountDownBoard";
 function App() {
   const initialTitle = window.localStorage.getItem("eventTitle") || "";
   const initialDate = window.localStorage.getItem("targetDate") || "";
-
-  const [title, setTitle] = useState("");
-  const [datetime, setDateTime] = useState("");
-
-  const [displayingTitle, setDisplayingTitle] = useState(initialTitle);
-  const [targetdate, setTargetDate] = useState(initialDate);
+  const [title, setTitle] = useState(initialTitle);
+  const [time, setTime] = useState(initialDate);
 
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
@@ -22,11 +18,11 @@ function App() {
   const [modal, setModal] = useState(false);
 
   const updateCountDown = () => {
-    if (targetdate) {
-      const then = moment(targetdate, "YYYY-MM-DDThh:mm");
+    if (time) {
+      const then = moment(time, "YYYY-MM-DDThh:mm");
       const now = moment();
       const duration = moment.duration(then.diff(now));
-      if (duration >= 0) {
+      if (duration > 0) {
         const days = duration.get("days");
         const hours = duration.get("hours");
         const minutes = duration.get("minutes");
@@ -44,11 +40,11 @@ function App() {
     }
   };
 
-  const handleSubmit = () => {
-    window.localStorage.setItem("targetDate", datetime);
+  const handleSubmit = (title, time) => {
+    window.localStorage.setItem("targetDate", time);
     window.localStorage.setItem("eventTitle", title);
-    setDisplayingTitle(title);
-    setTargetDate(datetime);
+    setTitle(title);
+    setTime(time);
     setModal(false);
   };
 
@@ -56,7 +52,7 @@ function App() {
     const interval = setInterval(() => updateCountDown(), 1000);
     //clear interval on unmount
     return () => clearInterval(interval);
-  }, [targetdate]);
+  }, [time]);
 
   return (
     <div className="App">
@@ -70,17 +66,9 @@ function App() {
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
           {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
-        {modal ? (
-          <ConfigModal
-            datetime={datetime}
-            title={title}
-            onChange={value => setDateTime(value)}
-            onChangeTitle={value => setTitle(value)}
-            onSubmit={() => handleSubmit()}
-          />
-        ) : null}
+        {modal ? <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} /> : null}
 
-        <div className="event-title">{displayingTitle}</div>
+        <div className="event-title">{title}</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
     </div>
