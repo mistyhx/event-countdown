@@ -28,9 +28,10 @@ function App() {
   });
 
   const numberTransitions = useTransition(time, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 0, color: "#d11a0f" },
+    enter: { opacity: 1, color: "black" },
+    leave: { opacity: 0, color: "#d11a0f" },
+    config: { duration: 1000 },
   });
 
   //UTIL FUNCTIONS
@@ -83,20 +84,22 @@ function App() {
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
           {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
-        {modalTransitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div key={key} style={props}>
-                <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} />️
-              </animated.div>
-            )
-        )}
+
         <div className="event-title">{title}</div>
         {numberTransitions.map(
           ({ item, key, props }) =>
             item && (
               <animated.div className="countdown-container" key={key} style={props}>
                 <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
+              </animated.div>
+            )
+        )}
+
+        {modalTransitions.map(
+          ({ item, key, props }) =>
+            item && (
+              <animated.div key={key} style={props}>
+                <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} />️
               </animated.div>
             )
         )}

@@ -15,7 +15,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 99;
 }
 
 .top {
@@ -61,6 +60,7 @@
   position: absolute;
   top: 40%;
   width: 100%;
+  z-index: 3;
 }
 
 .start-button {
