@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "./App.css";
-import DateTimeSelection from "./components/DateTimeSelection";
+import ConfigModal from "./components/ConfigModal";
 import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
-  const initialTitle = window.localStorage.getItem("eventTitle") || "";
+  const initialTitle = window.localStorage.getItem("eventTitle") || "MY EVENT";
   const initialDate = window.localStorage.getItem("targetDate") || "";
-
-  const [title, setTitle] = useState("");
-  const [datetime, setDateTime] = useState("");
-
-  const [displayingTitle, setDisplayingTitle] = useState(initialTitle);
-  const [targetdate, setTargetDate] = useState(initialDate);
+  const [title, setTitle] = useState(initialTitle);
+  const [time, setTime] = useState(initialDate);
 
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
@@ -22,11 +18,11 @@ function App() {
   const [modal, setModal] = useState(false);
 
   const updateCountDown = () => {
-    if (targetdate) {
-      const then = moment(targetdate, "YYYY-MM-DDThh:mm");
+    if (time) {
+      const then = moment(time, "YYYY-MM-DDThh:mm");
       const now = moment();
       const duration = moment.duration(then.diff(now));
-      if (duration >= 0) {
+      if (duration > 0) {
         const days = duration.get("days");
         const hours = duration.get("hours");
         const minutes = duration.get("minutes");
@@ -44,43 +40,33 @@ function App() {
     }
   };
 
-  const handleSubmit = () => {
-    window.localStorage.setItem("targetDate", datetime);
+  const handleSubmit = (title, time) => {
+    window.localStorage.setItem("targetDate", time);
     window.localStorage.setItem("eventTitle", title);
-    setDisplayingTitle(title);
-    setTargetDate(datetime);
+    setTitle(title);
+    setTime(time);
     setModal(false);
   };
 
   useEffect(() => {
     const interval = setInterval(() => updateCountDown(), 1000);
-    //clear interval on unmount
     return () => clearInterval(interval);
-  }, [targetdate]);
+  }, [time]);
 
   return (
     <div className="App">
       <svg className="top" height="200" width="100%">
-        <ellipse cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
+        <ellipse className="top-circle" cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
       </svg>
       <svg className="bottom" height="300" width="100%">
-        <ellipse cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
+        <ellipse className="bottom-circle" cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
       </svg>
       <div className="main">
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
-          CREATE EVENT
+          {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
-        {modal ? (
-          <DateTimeSelection
-            datetime={datetime}
-            title={title}
-            onChange={value => setDateTime(value)}
-            onChangeTitle={value => setTitle(value)}
-            onSubmit={() => handleSubmit()}
-          />
-        ) : null}
-
-        <div className="event-title">{displayingTitle}</div>
+        {modal ? <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} /> : null}
+        <div className="event-title">{title}</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
     </div>

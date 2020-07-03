@@ -1,26 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import "./index.css";
 
-const DateTimeSelection = ({ datetime, onChange, onSubmit, title, onChangeTitle }) => {
+const ConfigModal = ({ onSubmit }) => {
+  const [title, setTitle] = useState("");
+  const [time, setTime] = useState("");
   return (
     <div className="container">
       <form
         onSubmit={e => {
           e.preventDefault();
-          onSubmit();
+          onSubmit(title, time);
         }}
       >
         <div className="event">
-          <input type="text" value={title} onChange={e => onChangeTitle(e.target.value)} placeholder="Event Name" />
+          <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Event Name" required />
         </div>
         <div>
           <input
             type="datetime-local"
             name="datetime-local"
-            value={datetime}
-            onChange={e => onChange(e.target.value)}
+            value={time}
+            onChange={e => setTime(e.target.value)}
             min={moment().format("YYYY-MM-DDThh:mm")}
+            required
           />
         </div>
         <div>
@@ -31,4 +34,4 @@ const DateTimeSelection = ({ datetime, onChange, onSubmit, title, onChangeTitle 
   );
 };
 
-export default DateTimeSelection;
+export default ConfigModal;
