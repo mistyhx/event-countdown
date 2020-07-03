@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { animated, useTransition } from "react-spring";
 import moment from "moment";
 import "./App.css";
 import ConfigModal from "./components/ConfigModal";
 import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
+  //state
   const initialTitle = window.localStorage.getItem("eventTitle") || "MY EVENT";
   const initialDate = window.localStorage.getItem("targetDate") || "";
   const [title, setTitle] = useState(initialTitle);
   const [time, setTime] = useState(initialDate);
-
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
-
   const [modal, setModal] = useState(false);
+
+  //spring animations
+  const modalTransitions = useTransition(modal, null, {
+    from: { transform: "rotateZ(90deg)", transformOrigin: "top right" },
+    enter: { transform: "rotateZ(0deg)" },
+    leave: { transform: "rotateZ(90deg)" },
+  });
 
   const updateCountDown = () => {
     if (time) {
@@ -65,7 +72,14 @@ function App() {
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
           {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
-        {modal ? <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} /> : null}
+        {modalTransitions.map(
+          ({ item, key, props }) =>
+            item && (
+              <animated.div key={key} style={props}>
+                <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} />️
+              </animated.div>
+            )
+        )}
         <div className="event-title">{title}</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>
