@@ -5,7 +5,7 @@ import ConfigModal from "./components/ConfigModal";
 import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
-  const initialTitle = window.localStorage.getItem("eventTitle") || "";
+  const initialTitle = window.localStorage.getItem("eventTitle") || "MY EVENT";
   const initialDate = window.localStorage.getItem("targetDate") || "";
   const [title, setTitle] = useState(initialTitle);
   const [time, setTime] = useState(initialDate);
@@ -50,24 +50,22 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => updateCountDown(), 1000);
-    //clear interval on unmount
     return () => clearInterval(interval);
   }, [time]);
 
   return (
     <div className="App">
       <svg className="top" height="200" width="100%">
-        <ellipse cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
+        <ellipse className="top-circle" cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
       </svg>
       <svg className="bottom" height="300" width="100%">
-        <ellipse cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
+        <ellipse className="bottom-circle" cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
       </svg>
       <div className="main">
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
           {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
         {modal ? <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} /> : null}
-
         <div className="event-title">{title}</div>
         <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
       </div>

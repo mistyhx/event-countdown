@@ -14,7 +14,7 @@ const ConfigModal = ({ onSubmit }) => {
         }}
       >
         <div className="event">
-          <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Event Name" />
+          <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Event Name" required />
         </div>
         <div>
           <input
@@ -23,6 +23,7 @@ const ConfigModal = ({ onSubmit }) => {
             value={time}
             onChange={e => setTime(e.target.value)}
             min={moment().format("YYYY-MM-DDThh:mm")}
+            required
           />
         </div>
         <div>
