@@ -18,6 +18,7 @@ function App() {
 
   //TOGGLE STATES
   const [modal, setModal] = useState(false);
+  const [finished, setFinished] = useState(false);
 
   //SPRING ANIMATIONS
 
@@ -31,7 +32,24 @@ function App() {
     from: { opacity: 0, color: "#d11a0f" },
     enter: { opacity: 1, color: "black" },
     leave: { opacity: 0, color: "#d11a0f" },
-    config: { duration: 1000 },
+    config: { duration: 1500 },
+  });
+
+  const props = useSpring({
+    from: {
+      opacity: 0,
+      rx: 100,
+      ry: 50,
+    },
+    to: {
+      opacity: 1,
+      rx: 550,
+      ry: 300,
+    },
+    config: {
+      mass: 3,
+      easing: "ease",
+    },
   });
 
   //UTIL FUNCTIONS
@@ -75,11 +93,13 @@ function App() {
   return (
     <div className="App">
       <svg className="top" height="200" width="100%">
-        <ellipse className="top-circle" cx="50%" cy="-120" rx="550" ry="300" fill="#fff" />
+        <animated.ellipse style={props} cx="50%" cy="-120" fill="#fff" />
       </svg>
+
       <svg className="bottom" height="300" width="100%">
-        <ellipse className="bottom-circle" cx="50%" cy="420" rx="550" ry="300" fill="#D11A0F" />
+        <animated.ellipse style={props} cx="50%" cy="420" fill="#D11A0F" />
       </svg>
+
       <div className="main">
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
           {modal ? "CLOSE" : "CREATE EVENT"}

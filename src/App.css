@@ -23,25 +23,6 @@
   left: 0;
 }
 
-.top-circle {
-  animation: enlarge 1s ease;
-}
-
-.bottom-circle {
-  animation: enlarge 1s ease;
-}
-
-@keyframes enlarge {
-  from {
-    rx: 100;
-    ry: 50;
-  }
-  to {
-    rx: 550;
-    ry: 300;
-  }
-}
-
 .bottom {
   position: absolute;
   bottom: 0;
