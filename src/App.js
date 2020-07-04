@@ -35,6 +35,8 @@ function App() {
     config: { duration: 1500 },
   });
 
+  const [reset, setReset] = useState(false);
+
   const props = useSpring({
     from: {
       opacity: 0,
@@ -50,6 +52,8 @@ function App() {
       mass: 3,
       easing: "ease",
     },
+    reset: reset,
+    onStart: () => setReset(false),
   });
 
   //UTIL FUNCTIONS
@@ -82,6 +86,7 @@ function App() {
     setTitle(title);
     setTime(time);
     setModal(false);
+    setReset(true);
   };
 
   useEffect(() => {
@@ -92,19 +97,17 @@ function App() {
   //RENDERING
   return (
     <div className="App">
-      <svg className="top" height="200" width="100%">
-        <animated.ellipse style={props} cx="50%" cy="-120" fill="#fff" />
-      </svg>
-
-      <svg className="bottom" height="300" width="100%">
-        <animated.ellipse style={props} cx="50%" cy="420" fill="#D11A0F" />
-      </svg>
-
       <div className="main">
+        <svg className="top" height="200" width="100%">
+          <animated.ellipse style={props} cx="50%" cy="-120" fill="#fff" />
+        </svg>
+
+        <svg className="bottom" height="300" width="100%">
+          <animated.ellipse style={props} cx="50%" cy="420" fill="#D11A0F" />
+        </svg>
         <button className="start-button" onClick={() => setModal(modal => !modal)}>
           {modal ? "CLOSE" : "CREATE EVENT"}
         </button>
-
         <div className="event-title">{title}</div>
         {numberTransitions.map(
           ({ item, key, props }) =>

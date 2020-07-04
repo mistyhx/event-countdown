@@ -17,6 +17,10 @@
   bottom: 0;
 }
 
+.background {
+  position: relative;
+}
+
 .top {
   position: absolute;
   top: 0;
