@@ -41,6 +41,21 @@
   font-size: 7rem;
 }
 
+.finished {
+  height: 100%;
+  width: 100%;
+  background: #d11a0f;
+  padding-top: 20%;
+}
+
+.finished span {
+  font-family: Notable;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 7rem;
+  color: #fff;
+}
+
 .countdown-container {
   position: absolute;
   top: 40%;

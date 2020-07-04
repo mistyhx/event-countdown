@@ -76,6 +76,7 @@ function App() {
         setHour(0);
         setMinute(0);
         setSecond(0);
+        setFinished(true);
       }
     }
   };
@@ -97,36 +98,42 @@ function App() {
   //RENDERING
   return (
     <div className="App">
-      <div className="main">
-        <svg className="top" height="200" width="100%">
-          <animated.ellipse style={props} cx="50%" cy="-120" fill="#fff" />
-        </svg>
+      {finished ? (
+        <div className="finished" onClick={() => setFinished(false)}>
+          <span>Congratulation</span>
+        </div>
+      ) : (
+        <div className="main">
+          <svg className="top" height="200" width="100%">
+            <animated.ellipse style={props} cx="50%" cy="-120" fill="#fff" />
+          </svg>
 
-        <svg className="bottom" height="300" width="100%">
-          <animated.ellipse style={props} cx="50%" cy="420" fill="#D11A0F" />
-        </svg>
-        <button className="start-button" onClick={() => setModal(modal => !modal)}>
-          {modal ? "CLOSE" : "CREATE EVENT"}
-        </button>
-        <div className="event-title">{title}</div>
-        {numberTransitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div className="countdown-container" key={key} style={props}>
-                <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
-              </animated.div>
-            )
-        )}
+          <svg className="bottom" height="300" width="100%">
+            <animated.ellipse style={props} cx="50%" cy="420" fill="#D11A0F" />
+          </svg>
+          <button className="start-button" onClick={() => setModal(modal => !modal)}>
+            {modal ? "CLOSE" : "CREATE EVENT"}
+          </button>
+          <div className="event-title">{title}</div>
+          {numberTransitions.map(
+            ({ item, key, props }) =>
+              item && (
+                <animated.div className="countdown-container" key={key} style={props}>
+                  <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
+                </animated.div>
+              )
+          )}
 
-        {modalTransitions.map(
-          ({ item, key, props }) =>
-            item && (
-              <animated.div key={key} style={props}>
-                <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} />️
-              </animated.div>
-            )
-        )}
-      </div>
+          {modalTransitions.map(
+            ({ item, key, props }) =>
+              item && (
+                <animated.div key={key} style={props}>
+                  <ConfigModal onSubmit={(title, time) => handleSubmit(title, time)} />️
+                </animated.div>
+              )
+          )}
+        </div>
+      )}
     </div>
   );
 }
