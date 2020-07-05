@@ -7,7 +7,7 @@ import CountDownBoard from "./components/CountDownBoard";
 
 function App() {
   //DATA STATES
-  const initialTitle = window.localStorage.getItem("eventTitle") || "MY EVENT";
+  const initialTitle = window.localStorage.getItem("eventTitle") || "";
   const initialDate = window.localStorage.getItem("targetDate") || "";
   const [title, setTitle] = useState(initialTitle);
   const [time, setTime] = useState(initialDate);
@@ -58,26 +58,29 @@ function App() {
 
   //UTIL FUNCTIONS
   const updateCountDown = () => {
-    if (time) {
-      const then = moment(time, "YYYY-MM-DDThh:mm");
-      const now = moment();
-      const duration = moment.duration(then.diff(now));
-      if (duration > 0) {
-        const days = duration.get("days");
-        const hours = duration.get("hours");
-        const minutes = duration.get("minutes");
-        const seconds = duration.get("seconds");
-        setDay(days);
-        setHour(hours);
-        setMinute(minutes);
-        setSecond(seconds);
-      } else {
-        setDay(0);
-        setHour(0);
-        setMinute(0);
-        setSecond(0);
-        setFinished(true);
-      }
+    const then = moment(time, "YYYY-MM-DDThh:mm");
+    const now = moment();
+    const duration = moment.duration(then.diff(now));
+    if (duration > 0) {
+      const days = duration.get("days");
+      const hours = duration.get("hours");
+      const minutes = duration.get("minutes");
+      const seconds = duration.get("seconds");
+      setDay(days);
+      setHour(hours);
+      setMinute(minutes);
+      setSecond(seconds);
+    } else {
+      //reset all the value
+      setDay(0);
+      setHour(0);
+      setMinute(0);
+      setSecond(0);
+      setFinished(true);
+      setTime("");
+      setTitle("");
+      window.localStorage.removeItem("eventTitle");
+      window.localStorage.removeItem("targetDate");
     }
   };
 
@@ -91,8 +94,12 @@ function App() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => updateCountDown(), 1000);
-    return () => clearInterval(interval);
+    if (time) {
+      const interval = setInterval(() => updateCountDown(), 1000);
+      return () => clearInterval(interval);
+    } else {
+      return;
+    }
   }, [time]);
 
   //RENDERING
@@ -114,14 +121,17 @@ function App() {
           <button className="start-button" onClick={() => setModal(modal => !modal)}>
             {modal ? "CLOSE" : "CREATE EVENT"}
           </button>
-          <div className="event-title">{title}</div>
-          {numberTransitions.map(
-            ({ item, key, props }) =>
-              item && (
-                <animated.div className="countdown-container" key={key} style={props}>
-                  <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
-                </animated.div>
-              )
+          <div className="event-title">{time ? title : "CREATE EVENT"}</div>
+          {numberTransitions.map(({ item, key, props }) =>
+            item ? (
+              <animated.div className="countdown-container" key={key} style={props}>
+                <CountDownBoard day={day} hour={hour} minute={minute} second={second} />
+              </animated.div>
+            ) : (
+              <animated.div className="countdown-container" key={key} style={props}>
+                <CountDownBoard day="0" hour="0" minute="0" second="0" />
+              </animated.div>
+            )
           )}
 
           {modalTransitions.map(
