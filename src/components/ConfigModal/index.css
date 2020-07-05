@@ -6,18 +6,6 @@
   top: 5rem;
   right: 2rem;
   box-shadow: 0 5px 10px 2px rgba(0, 0, 0, 0.1);
-  transform-origin: top right;
-  transform-style: preserve-3d;
-  animation: rotate 1s ease;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotateZ(90deg);
-  }
-  to {
-    transform: rotateZ(0deg);
-  }
 }
 
 .container div {

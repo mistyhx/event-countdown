@@ -15,42 +15,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 99;
-  animation: fadeIn 2s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.background {
+  position: relative;
 }
 
 .top {
   position: absolute;
   top: 0;
   left: 0;
-}
-
-.top-circle {
-  animation: enlarge 1s ease;
-}
-
-.bottom-circle {
-  animation: enlarge 1s ease;
-}
-
-@keyframes enlarge {
-  from {
-    rx: 100;
-    ry: 50;
-  }
-  to {
-    rx: 550;
-    ry: 300;
-  }
 }
 
 .bottom {
@@ -60,10 +34,33 @@
 }
 
 .event-title {
+  position: absolute;
   font-family: Notable;
-  margin-top: 5rem;
-  margin-bottom: 4rem;
+  top: 15%;
+  width: 100%;
   font-size: 7rem;
+}
+
+.finished {
+  height: 100%;
+  width: 100%;
+  background: #d11a0f;
+  padding-top: 20%;
+}
+
+.finished span {
+  font-family: Notable;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 7rem;
+  color: #fff;
+}
+
+.countdown-container {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  z-index: 3;
 }
 
 .start-button {
